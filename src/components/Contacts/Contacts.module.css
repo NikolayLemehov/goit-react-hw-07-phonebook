@@ -10,11 +10,3 @@
   gap: 15px;
 }
 
-.item {
-  display: flex;
-  gap: 10px;
-}
-
-.name {
-  margin-right: auto;
-}

@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import s from './ContactForm.module.css';
 import InputField from '../InputField';
+import {useAddContactItemMutation} from "../../store/contacts.service";
 
 const initValue = {
   name: '',
   number: '',
 };
 
-function ContactForm({ onSubmit }) {
+function ContactForm() {
   const [value, setValue] = useState(initValue);
+  const [addContactItem] = useAddContactItemMutation();
 
   const handleInputChange = (e) => setValue((p) =>
     ({...p, [e.target.name]: e.target.value }));
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    onSubmit(value);
+    addContactItem(value);
     setValue(initValue)
   };
 
@@ -47,9 +48,5 @@ function ContactForm({ onSubmit }) {
     </form>
   );
 }
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
 
 export default ContactForm;
