@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import s from './Contacts.module.css';
 import InputField from '../InputField';
 import Notification from '../Notification';
@@ -19,23 +19,31 @@ function Contacts() {
   const filteredContacts = contacts !== undefined ? contacts.filter(it => it.name.includes(filter)) : [];
 
   return (
-    <div className={s.container}>
-      <InputField
-        label='Find contacts by name'
-        value={filter}
-        onChange={handleInputChange}
-        type='text'
-        name='filter'
-      />
+    <>
+      <div className={s.container}>
+        <InputField
+          label='Find contacts by name'
+          value={filter}
+          onChange={handleInputChange}
+          type='text'
+          name='filter'
+        />
 
-      {!filteredContacts.length
-        ? <Notification message='Contact list is empty.' />
-        : <ul className={s.list}>
-          {filteredContacts.map(({ id, name, number }) => (
-            <ContactItem key={id} id={id} name={name} number={number}/>
-          ))}
-        </ul>}
-    </div>
+        {isLoading && <h1>Loading...</h1>}
+        {error && <h3>Error: {error}</h3>}
+        {contacts &&
+          <>
+            {!filteredContacts.length
+              ? <Notification message='Contact list is empty.'/>
+              : <ul className={s.list}>
+                {filteredContacts.map(({id, name, number}) => (
+                  <ContactItem key={id} id={id} name={name} number={number}/>
+                ))}
+              </ul>}
+          </>
+        }
+      </div>
+    </>
   );
 }
 
