@@ -4,7 +4,7 @@ import s from './ContactItem.module.css';
 import {useDeleteContactByIdMutation} from "../../store/contacts.service";
 
 function ContactItem({id, name, number}) {
-  const [deleteContactById] = useDeleteContactByIdMutation();
+  const [deleteContactById, {isLoading}] = useDeleteContactByIdMutation();
 
   return (
     <li key={id} className={s.item}>
@@ -13,7 +13,9 @@ function ContactItem({id, name, number}) {
       <button
         type='button'
         onClick={() => deleteContactById(id)}
-      >Delete
+        disabled={isLoading}
+      >
+        Delete{isLoading && <span>...</span>}
       </button>
     </li>
   );

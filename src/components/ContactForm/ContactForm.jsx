@@ -10,8 +10,7 @@ const initValue = {
 
 function ContactForm() {
   const [value, setValue] = useState(initValue);
-  const [addContactItem] = useAddContactItemMutation();
-
+  const [addContactItem, {isLoading}] = useAddContactItemMutation();
   const handleInputChange = (e) => setValue((p) =>
     ({...p, [e.target.name]: e.target.value }));
 
@@ -44,7 +43,11 @@ function ContactForm() {
         title='Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
         required
       />
-      <button className={s.btn} type='submit'>Add contact</button>
+      <button
+        className={s.btn}
+        type='submit'
+        disabled={isLoading}
+      >Add contact{isLoading && <span>...</span>}</button>
     </form>
   );
 }
